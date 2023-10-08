@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -44,7 +43,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function delete(string $id)
+    public function destroy(string $id)
     {
         User::findOrFail($id)->delete();
 
