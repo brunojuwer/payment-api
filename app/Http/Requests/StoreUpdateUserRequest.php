@@ -30,10 +30,11 @@ class StoreUpdateUserRequest extends FormRequest
                 'unique:users'
             ],
             'password' => 'required|min:5|max:255',
-            'cpf' => 'required|min:14|max:14|unique:users', 
+            'cpf' => 'required|min:14|max:14|unique:users',
             'nationality' => 'required|min:3|max:100',
             'contact_number' => 'required|min:13|max:13',
-            'birth_date' => 'required'
+            'birth_date' => 'required',
+            'account_type' => 'required'
         ];
     }
 }

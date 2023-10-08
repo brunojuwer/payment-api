@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -15,6 +16,7 @@ class UserController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
+
         $users = User::all();
         return UserResource::collection($users);
     }
@@ -26,10 +28,14 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function store(StoreUpdateUserRequest $request): UserResource
+    public function store(StoreUpdateUserRequest $request, Account $account): UserResource
     {
         $data = $request->validated();
+        $accountType = $data["account_type"];
+        unset($data["account_type"]);
         $user = User::create($data);
+
+        $account->createUserAccount($user->id, $accountType);
 
         return new UserResource($user);
     }

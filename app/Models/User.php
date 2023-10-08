@@ -21,10 +21,11 @@ class User extends Authenticatable
         'full_name',
         'email',
         'password',
-        'cpf', 
-        'nationality', 
-        'contact_number', 
+        'cpf',
+        'nationality',
+        'contact_number',
         'birth_date',
+        'account_type'
     ];
 
     /**

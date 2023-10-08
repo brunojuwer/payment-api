@@ -11,28 +11,36 @@ class Account extends Model
 {
     use HasFactory;
 
-    private string $code;
-    private string $type;
-    private Decimal $balance;
+    protected $fillable = [
+        'code',
+        'type',
+        'balance',
+        'user_id',
+    ];
 
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function getCode(): string 
-    {
-        return $this->code;
-    }
-
-    public function setCode(): void
+    private function setCode(): string
     {
         $generator = "0123456789";
         $result = "";
 
-        for ($i= 0; $i < 10; $i++) { 
+        for ($i= 0; $i < 10; $i++) {
             $result .= substr($generator, rand() % strlen($generator), 1);
         }
-        $this->code = $result;
+        return $result;
+    }
+
+    public function createUserAccount(int $userId, string $type)
+    {
+        Account::create([
+            'code' => $this->setCode(),
+            'balance' => new Decimal("0"),
+            'user_id' => $userId,
+            'type' => $type
+        ]);
     }
 }
