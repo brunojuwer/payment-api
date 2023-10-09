@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             'nationality' => $this->nationality,
             'contact' => $this->contact_number,
             'birth' => $this->birth_date,
-            'created' => $this->created_at
+            'created' => $this->created_at,
+            'account' => $this->account($this->id)
         ];
     }
 }

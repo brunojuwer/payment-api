@@ -16,14 +16,12 @@ class UserController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-
         $users = User::all();
         return UserResource::collection($users);
     }
 
     public function show(string $id): UserResource
     {
-
         $user = User::findOrFail($id);
         return new UserResource($user);
     }
@@ -33,6 +31,7 @@ class UserController extends Controller
         $data = $request->validated();
         $accountType = $data["account_type"];
         unset($data["account_type"]);
+
         $user = User::create($data);
 
         $account->createUserAccount($user->id, $accountType);
