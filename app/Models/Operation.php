@@ -6,6 +6,4 @@ class Operation {
   public const TED = "TED";
   public const DOC = "DOC";
   public const SIMPLE_TRANSACTION = "SIMPLE_TRANSACTION";
-  public const DEPOSIT = "DEPOSIT";
-  public const WITHDRAW = "WITHDRAW";
 }
