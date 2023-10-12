@@ -14,4 +14,11 @@ class Transaction extends Model
     {
         return $this->belongsToMany(Account::class);
     }
+
+    public function createTransaction($data)
+    {
+        Transaction::create([
+            ''
+        ]);
+    }
 }

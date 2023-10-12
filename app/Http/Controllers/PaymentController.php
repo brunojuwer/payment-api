@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SimplePaymentRequest;
 use App\PaymentMethods\PaymentStrategyContext;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,9 @@ class PaymentController extends Controller
         $this->paymentStrategyContext->pay($data);
     }
 
-    public function simple(Request $request)
+    public function simple(SimplePaymentRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $this->paymentStrategyContext = new PaymentStrategyContext('simple');
         $this->paymentStrategyContext->pay($data);
     }

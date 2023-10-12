@@ -24,7 +24,7 @@ class AccountService {
 
       DB::commit();
 
-    } catch (Exception $exception) {
+    } catch (Exception) {
       DB::rollBack();
     }
   }
