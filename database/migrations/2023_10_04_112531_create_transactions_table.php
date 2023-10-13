@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('account_code');
             $table->decimal('amount', 10, 2);
-            $table->string('from_account');
+            $table->string('account_code');
+            $table->string('foreign_account');
+            $table->enum('type', ['DEPOSIT', 'WITHDRAW']);
             $table->string('operation');
             $table->timestamps();
         });
