@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SimplePaymentRequest;
+use App\Models\Operation;
+use App\Models\Transaction;
 use App\PaymentMethods\PaymentStrategyContext;
 use Illuminate\Http\Request;
 
@@ -18,10 +20,13 @@ class PaymentController extends Controller
         $this->paymentStrategyContext->pay($data);
     }
 
-    public function simple(SimplePaymentRequest $request)
+    public function simple(SimplePaymentRequest $request): Transaction
     {
         $data = $request->validated();
         $this->paymentStrategyContext = new PaymentStrategyContext('simple');
         $this->paymentStrategyContext->pay($data);
+
+        Transaction::createDepositTransaction($data, Operation::SIMPLE);
+        return Transaction::createWithdrawTransaction($data, Operation::SIMPLE);
     }
 }
