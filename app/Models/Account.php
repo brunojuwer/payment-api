@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Exceptions\AccountNotFoundException;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
+use Throwable;
 
 class Account extends Model
 {
@@ -53,5 +56,18 @@ class Account extends Model
             'user_id' => $userId,
             'type' => $type
         ]);
+    }
+
+    public static function findAccountByCodeOrFail(string $code): self
+    {
+        try {
+            return Account::query()
+                ->select()
+                ->where('code', $code)
+                ->firstOrFail();
+        } 
+        catch(Throwable) {
+            throw new AccountNotFoundException($code);
+        }
     }
 }

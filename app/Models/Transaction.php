@@ -13,7 +13,6 @@ class Transaction extends Model
     public const DEPOSIT = 'DEPOSIT';
     public const WITHDRAW = 'WITHDRAW';
 
-
     protected $fillable = [
         'amount',
         'account_code',
@@ -27,7 +26,7 @@ class Transaction extends Model
         return $this->belongsToMany(Account::class);
     }
 
-    public static function createDepositTransaction($data, $operation): Transaction
+    public static function createDepositTransaction($data, $operation): self
     {
         return Transaction::create([
             'amount' => $data['amount'],
@@ -37,7 +36,7 @@ class Transaction extends Model
             'operation' => $operation,
         ]);
     }
-    public static function createWithdrawTransaction($data, $operation): Transaction
+    public static function createWithdrawTransaction($data, $operation): self
     {
         return Transaction::create([
             'amount' => $data['amount'],
