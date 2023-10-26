@@ -26,5 +26,13 @@ class Handler extends ExceptionHandler
                     'detail' => $e->getMessage()
                 ], 400);
         });
+
+        $this->renderable(function (InsufficientBalanceException $e, $request) {
+            return response()->json([
+                'status' => 409,
+                'message' => 'Business rule exception',
+                'detail' => $e->getMessage()
+            ], 409);
+    });
     }
 }
