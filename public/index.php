@@ -42,7 +42,7 @@ require __DIR__.'/../vendor/autoload.php';
 | the application's HTTP kernel. Then, we will send the response back
 | to this client's browser, allowing them to enjoy our application.
 |
-*/
+*/ 
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 

@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\Exceptions\AccountNotFoundException;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Decimal;
 use Throwable;
 
@@ -38,14 +36,6 @@ class Account extends Model
             $result .= substr($generator, rand() % strlen($generator), 1);
         }
         return $result;
-    }
-
-    private function withdraw($value) {
-        $this->balance -= $value;
-    }
-
-    private function deposit($value) {
-        $this->balance += $value;
     }
 
     public function createUserAccount(int $userId, string $type)
