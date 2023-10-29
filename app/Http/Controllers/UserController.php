@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Account;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -20,10 +21,18 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function show(string $id): UserResource
+    public function show(Request $request, string $id): UserResource | JsonResponse
     {
+        $authenticatedUser = $request->user();
         $user = User::findOrFail($id);
-        return new UserResource($user);
+        
+        if($user['id'] === $authenticatedUser['id']) {
+            return new UserResource($user);
+        }
+
+        return response()->json([
+            "message" => "Unauthorized action",
+        ]);
     }
 
     public function store(StoreUpdateUserRequest $request, Account $account): UserResource
