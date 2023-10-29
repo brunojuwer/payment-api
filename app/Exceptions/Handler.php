@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,6 +42,14 @@ class Handler extends ExceptionHandler
                 'message' => 'Forbidden',
                 'detail' => $e->getMessage()
             ], 403);
+        });
+
+        $this->renderable(function (UnauthorizedException $e, $request) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthorized',
+                'detail' => $e->getMessage()
+            ], 401);
         });
     }
 }
