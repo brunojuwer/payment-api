@@ -8,7 +8,7 @@ use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Account;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -21,18 +21,11 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function show(Request $request, string $id): UserResource | JsonResponse
+    public function show(Request $request, string $id): UserResource
     {
-        $authenticatedUser = $request->user();
         $user = User::findOrFail($id);
-        
-        if($user['id'] === $authenticatedUser['id']) {
-            return new UserResource($user);
-        }
-
-        return response()->json([
-            "message" => "Unauthorized action",
-        ]);
+        AuthService::checkUserAuthorization($user, $request);
+        return new UserResource($user);
     }
 
     public function store(StoreUpdateUserRequest $request, Account $account): UserResource
@@ -51,16 +44,19 @@ class UserController extends Controller
     public function update(Request $request, string $id): UserResource
     {
         $user = User::findOrfail($id);
+        AuthService::checkUserAuthorization($user, $request);
+
         $data = $request->all();
         $user->update($data);
 
         return new UserResource($user);
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        User::findOrFail($id)->delete();
-
+        $user = User::findOrFail($id);
+        AuthService::checkUserAuthorization($user, $request);
+        $user->delete();
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }

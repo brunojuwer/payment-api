@@ -33,6 +33,14 @@ class Handler extends ExceptionHandler
                 'message' => 'Business rule exception',
                 'detail' => $e->getMessage()
             ], 409);
-    });
+        });
+
+        $this->renderable(function (ForbiddenUserAction $e, $request) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'Forbidden',
+                'detail' => $e->getMessage()
+            ], 403);
+        });
     }
 }
