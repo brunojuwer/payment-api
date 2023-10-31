@@ -14,15 +14,10 @@ use App\PaymentMethods\SimplePayment;
 
 class PaymentService {
 
-  public static function pay($data, PaymentMethod $payment): Transaction
+  public static function pay($data, $fromAccount, PaymentMethod $payment): Transaction
   {
-    $toAccount = Account::findAccountByCodeOrFail($data['fromAccount']);
-    Account::findAccountByCodeOrFail($data['toAccount']);
-
-    self::accountHaveSufficientBalance($toAccount, $data['amount']);
-
+    self::accountHaveSufficientBalance($fromAccount, $data['amount']);
     $payment->pay($data);
-
     return self::createAccountTransactions($data, $payment);
   }
 
