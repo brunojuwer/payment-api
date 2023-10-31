@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ForbiddenUserAction;
+use App\Models\Account;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -15,6 +16,15 @@ class AuthService
   {
     $authenticatedUser = $request->user();
     if($user['id'] !== $authenticatedUser['id']) {
+      throw new ForbiddenUserAction;
+    }
+  }
+
+  public static function checkAccountAuthorization(Account $fromAccount, Request $request)
+  {
+    $authenticatedUser = $request->user();
+    $account = $authenticatedUser->account($authenticatedUser['id']);
+    if($fromAccount['code'] !== $account['code']) {
       throw new ForbiddenUserAction;
     }
   }
