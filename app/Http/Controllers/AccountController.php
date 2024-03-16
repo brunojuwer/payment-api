@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -35,9 +36,11 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Account $account)
+    public function show(Request $request, string $code)
     {
-        //
+        $account = Account::query()->where('code', $code)->first();
+        AuthService::checkAccountAuthorization($account, $request);
+        return $account;
     }
 
     /**

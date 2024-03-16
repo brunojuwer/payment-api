@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
@@ -15,6 +16,9 @@ Route::delete('/tokens', [AuthController::class, 'logout'])
 Route::apiResource('/users', UserController::class)
   ->middleware('auth:sanctum')
   ->except('store');
+
+Route::apiResource('/accounts', AccountController::class)
+  ->middleware('auth:sanctum');
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
   Route::post('/payments/pix', [PaymentController::class, 'pix']);
