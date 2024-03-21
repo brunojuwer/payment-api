@@ -10,14 +10,15 @@ use PHPUnit\Framework\TestCase;
 class AuthControllerTest extends TestCase
 {
  
-    public function test_should_return_201_when_login(): void
+    public function should_return_201_when_login(): void
     {
-        $userData = [
-            'email' => 'user@example.com',
-            'password' => 'secret',
-        ];
+        // $userData = [
+        //     'email' => 'user@example.com',
+        //     'password' => 'secret',
+        // ];
         $request = $this->createMock(Request::class);
         
+
         $authServiceMock = $this->createMock(AuthService::class);
         
         $authServiceMock->expects($this->once())
@@ -28,6 +29,7 @@ class AuthControllerTest extends TestCase
         $controller = new AuthController($authServiceMock);
 
         $response = $controller->login($request);
+        dd($response);
 
         $this->assertEquals(201, $response->status());
     }

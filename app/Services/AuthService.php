@@ -48,8 +48,7 @@ class AuthService
     ]);
 
     $credentials = request(['email','password']);
-
-    if(!Auth::attempt($credentials)) {
+    if(! Auth::attempt($credentials)) {
         throw new UnauthorizedException('Bad credentials');
     }
   }
