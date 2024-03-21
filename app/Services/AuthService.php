@@ -14,7 +14,7 @@ class AuthService
 {
   public static function checkUserAuthorization(User $user, Request $request)
   {
-    $authenticatedUser = $request->user();
+    $authenticatedUser = $request->user();  
     if($user['id'] !== $authenticatedUser['id']) {
       throw new ForbiddenUserAction;
     }
@@ -29,9 +29,9 @@ class AuthService
     }
   }
 
-  public static function createToken(Request $request): string
+  public function createToken(Request $request): string
   {
-    self::validateCredentials($request);
+    $this->validateCredentials($request);
     $request->user()->tokens()->delete();
     $user = $request->user();
     $expirationDateTime = (new DateTime())->modify('+8 hours');
@@ -40,7 +40,7 @@ class AuthService
   }
 
 
-  private static function validateCredentials(Request $request)
+  private function validateCredentials(Request $request)
   {
     $request->validate([
       'email' => 'required|string|email',

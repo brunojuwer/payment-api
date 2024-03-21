@@ -33,9 +33,6 @@ class AccountController extends Controller
     {
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request, string $code)
     {
         $account = Account::query()->where('code', $code)->first();

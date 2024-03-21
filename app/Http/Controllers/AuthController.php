@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    public function __construct(
+        protected AuthService $authService
+    )
+    {
+        $this->authService = $authService;
+    }
+
+
     public function login(Request $request): JsonResponse
     {
-        $token = AuthService::createToken($request);
+        $token = $this->authService->createToken($request);
         return response()->json([
             'accessToken' => $token,
             'token_type' => 'Bearer',
