@@ -47,6 +47,6 @@ class UserFactory extends Factory
         for ($i = 0; $i < 11; $i++) {
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
         }
-        return $randomString;
+        return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $randomString);
     }
 }
