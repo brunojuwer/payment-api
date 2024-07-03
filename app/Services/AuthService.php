@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
 
-class AuthService 
+class AuthService
 {
   public static function checkUserAuthorization(User $user, Request $request)
   {
-    $authenticatedUser = $request->user();  
-    if($user['id'] !== $authenticatedUser['id']) {
+    $authenticatedUser = $request->user();
+    if ($user['id'] !== $authenticatedUser['id']) {
       throw new ForbiddenUserAction;
     }
   }
@@ -24,7 +24,7 @@ class AuthService
   {
     $authenticatedUser = $request->user();
     $account = $authenticatedUser->account($authenticatedUser['id']);
-    if($fromAccount['code'] !== $account['code']) {
+    if ($fromAccount['code'] !== $account['code']) {
       throw new ForbiddenUserAction;
     }
   }
@@ -47,9 +47,9 @@ class AuthService
       'password' => 'required|string',
     ]);
 
-    $credentials = request(['email','password']);
-    if(! Auth::attempt($credentials)) {
-        throw new UnauthorizedException('Bad credentials');
+    $credentials = request(['email', 'password']);
+    if (!Auth::attempt($credentials)) {
+      throw new UnauthorizedException('Bad credentials');
     }
   }
 }

@@ -11,8 +11,7 @@ class AuthController extends Controller
 
     public function __construct(
         protected AuthService $authService
-    )
-    {
+    ) {
         $this->authService = $authService;
     }
 
@@ -21,7 +20,8 @@ class AuthController extends Controller
     {
         $token = $this->authService->createToken($request);
         return response()->json([
-            'accessToken' => $token,
+            'user_name' => $request->user()->full_name,
+            'access_token' => $token,
             'token_type' => 'Bearer',
         ], 201);
     }
