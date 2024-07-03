@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'contact' => $this->contact_number,
             'birth' => $this->birth_date,
             'created' => $this->created_at,
-            'account' => $this->account($this->id)
+            'account' => $this->account
         ];
     }
 }
